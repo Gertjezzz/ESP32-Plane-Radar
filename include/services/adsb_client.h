@@ -4,6 +4,12 @@
 
 namespace services::adsb {
 
+enum class AircraftKind {
+  Unknown,
+  Airplane,
+  Helicopter
+};
+
 struct Aircraft {
   float lat;
   float lon;
@@ -13,6 +19,7 @@ struct Aircraft {
   char callsign[9];
   char type[5];
   char alt[12];
+  AircraftKind kind = AircraftKind::Unknown;
 };
 
 constexpr size_t kMaxAircraft = 64;
@@ -20,11 +27,9 @@ constexpr size_t kMaxAircraft = 64;
 size_t aircraftCount();
 const Aircraft* aircraftList();
 
-/** Hook invoked during long HTTP I/O (e.g. wifiLoop). Optional. */
 using PollFn = void (*)();
 void setPollFn(PollFn fn);
 
-/** Fetch aircraft within fetch_radius_km of center_lat/lon from adsb.fi. */
 bool fetchUpdate(double center_lat, double center_lon, float fetch_radius_km);
 
 }  // namespace services::adsb
