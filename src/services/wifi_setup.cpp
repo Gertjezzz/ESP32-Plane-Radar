@@ -6,8 +6,8 @@
 
 using namespace ui::radar;
 
-static WebServer server(80);
-static Preferences prefs;
+WebServer server(80);
+Preferences prefs;
 
 struct UserSettings {
   bool darkMode;
@@ -16,7 +16,8 @@ struct UserSettings {
   uint16_t helicopterColor;
 };
 
-static UserSettings settings;
+UserSettings settings;
+bool radarShowHelicopters = true;
 
 static uint16_t parseHtmlColor(const String& s) {
   uint32_t rgb = strtol(s.substring(1).c_str(), nullptr, 16);
@@ -46,6 +47,7 @@ static void loadSettings() {
   kRadarTheme.background = settings.darkMode ? TFT_BLACK : TFT_NAVY;
   kRadarTheme.airplaneSymbol = settings.airplaneColor;
   kRadarTheme.helicopterSymbol = settings.helicopterColor;
+  radarShowHelicopters = settings.showHelicopters;
 }
 
 static void saveSettings() {
