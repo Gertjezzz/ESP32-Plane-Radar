@@ -3,9 +3,9 @@
 #include <TFT_eSPI.h>
 #include <cmath>
 
-namespace ui::radar {
-
 extern bool radarShowHelicopters;
+
+namespace ui::radar {
 
 static TFT_eSPI tft;
 
